@@ -1,0 +1,47 @@
+name: mheads-yii2-table
+
+x-php-base: &php-base
+  build:
+    context: ./..
+    dockerfile: ./docker/Dockerfile
+  image: mheads-yii2-table-php-test
+  volumes:
+    - ./..:/code
+  command: tail -F anything
+
+services:
+  php:
+    <<: *php-base
+    profiles:
+      - php
+      - all
+  php-mysql:
+    <<: *php-base
+    environment:
+      YII_MYSQL_HOST: mysql
+    profiles:
+      - mysql
+      - all
+    depends_on:
+      mysql:
+        condition: service_healthy
+  mysql:
+    image: mysql:8
+    ports:
+      - "3318:3306"
+    volumes:
+      - type: tmpfs
+        target: /var/lib/mysql
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: true
+      MYSQL_DATABASE: mhfs-test
+      MYSQL_USER: yii
+      MYSQL_PASSWORD: 'q1w2e3r4'
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost", "-uyii" ]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    profiles:
+      - mysql
+      - all

@@ -1,0 +1,42 @@
+* text=auto eol=lf
+
+*.php  text
+*.css  text
+*.js   text
+*.txt  text
+*.md   text
+*.xml  text
+*.json text
+*.bat  text
+*.sql  text
+*.yml  text
+*.yaml text
+
+*.phar binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.ttf  binary
+
+# Exclude everything from distribution archive by default
+* export-ignore
+
+# Keep runtime sources
+/src/ -export-ignore
+/src/** -export-ignore
+
+# Keep package metadata
+/composer.json -export-ignore
+/LICENSE -export-ignore
+/README.md -export-ignore
+/README.ru.md -export-ignore
+/CHANGELOG.md -export-ignore
+
+# Keep user-facing documentation and examples
+/docs/ -export-ignore
+/docs/** -export-ignore
+/examples/ -export-ignore
+/examples/** -export-ignore
+
+/CHANGELOG.md merge=union

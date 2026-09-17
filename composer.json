@@ -1,0 +1,63 @@
+{
+    "name": "mheads/yii2-table",
+    "type": "library",
+    "description": "Yii2 bridge for mheads/yii-table.",
+    "license": "BSD-3-Clause",
+    "keywords": [
+		"yii2",
+		"table",
+		"adapter"
+    ],
+    "authors": [
+        {
+            "name": "MachineHeads",
+            "homepage": "https://machineheads.ru",
+            "role": "Development company"
+        },
+        {
+            "name": "Sergey Alekseenko",
+            "email": "sergei_alekseenk@list.ru",
+            "role": "Developer"
+        }
+    ],
+	"suggest": {
+		"mheads/yii2-data-db": "Allows using Yii2 DB queries as table data sources and export sources."
+	},
+    "require": {
+        "php": "8.3 - 8.5",
+        "mheads/yii-table": "^1.0",
+        "mheads/yii2-psr7-bridge": "^1.0"
+	},
+    "require-dev": {
+		"mheads/yii2-data-db": "^1.0",
+        "phpunit/phpunit": "^12.5",
+        "friendsofphp/php-cs-fixer": "^3.94",
+        "vimeo/psalm": "^6.16"
+    },
+    "config": {
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Mheads\\Yii2\\Table\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Mheads\\Yii2\\Table\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "cs-fixer": "php-cs-fixer fix",
+        "psalm": "psalm --no-cache",
+        "test": "phpunit --testsuite Unit"
+    }
+}
