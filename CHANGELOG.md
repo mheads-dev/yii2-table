@@ -5,6 +5,13 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-09-19
+
+### Added
+
+- Added Yii2 translator adapter for `mheads/yii-table` filter label translations.
+- Added documentation for registering table translations with Yii2 i18n.
+
 ## [1.0.0] - 2026-09-17
 
 ### Added
@@ -14,5 +21,6 @@ and this project follows [Semantic Versioning](https://semver.org/spec/v2.0.0.ht
 - Added `QueryDataReaderBatchReadStrategy` for batched exports from `mheads/yii2-data-db` readers.
 - Added Russian README and usage guide.
 
-[Unreleased]: https://github.com/mheads-dev/yii2-table/compare/1.0.0...HEAD
+[Unreleased]: https://github.com/mheads-dev/yii2-table/compare/1.1.0...HEAD
+[1.1.0]: https://github.com/mheads-dev/yii2-table/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/mheads-dev/yii2-table/releases/tag/1.0.0

@@ -56,6 +56,7 @@ return [
             \Mheads\Yii\Table\Serialization\TableSerializerInterface::class               => \Mheads\Yii\Table\Serialization\TableArraySerializer::class,
             \Mheads\Yii\Table\Serialization\TableConfigSerializerInterface::class         => \Mheads\Yii\Table\Serialization\TableArraySerializer::class,
             \Mheads\Yii\Table\Serialization\TableRowsSerializerInterface::class           => \Mheads\Yii\Table\Serialization\TableArraySerializer::class,
+            \Mheads\Yii\Table\I18n\TableTranslatorInterface::class                        => \Mheads\Yii2\Table\I18n\Yii2TableTranslator::class,
 
             // mheads/yii2-psr7-bridge
             \Mheads\Yii2Psr7Bridge\HttpMessageBridgeInterface::class                    => \Mheads\Yii2Psr7Bridge\HttpMessageBridge::class,
@@ -65,6 +66,33 @@ return [
     ],
 ];
 ```
+
+## Переводы фильтров
+
+Фильтры `mheads/yii-table` используют
+`Mheads\Yii\Table\I18n\TableTranslatorInterface` для локализации системных
+подписей. `Yii2TableTranslator` адаптирует этот интерфейс к `Yii::t()`.
+
+Зарегистрируйте категорию переводов Yii2:
+
+```php
+return [
+    'components' => [
+        'i18n' => [
+            'translations' => [
+                'mheads-yii-table' => [
+                    'class' => \yii\i18n\PhpMessageSource::class,
+                    'basePath' => '@vendor/mheads/yii-table/resources/messages',
+                ],
+            ],
+        ],
+    ],
+];
+```
+
+Пакет `mheads/yii-table` уже содержит стандартные переводы. Если приложению
+нужно переопределить тексты, укажите собственный `basePath`, например
+`@common/i18n/messages`.
 
 ## Быстрый пример
 

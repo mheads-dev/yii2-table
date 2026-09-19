@@ -61,6 +61,7 @@ return [
             \Mheads\Yii\Table\Serialization\TableSerializerInterface::class               => \Mheads\Yii\Table\Serialization\TableArraySerializer::class,
             \Mheads\Yii\Table\Serialization\TableConfigSerializerInterface::class         => \Mheads\Yii\Table\Serialization\TableArraySerializer::class,
             \Mheads\Yii\Table\Serialization\TableRowsSerializerInterface::class           => \Mheads\Yii\Table\Serialization\TableArraySerializer::class,
+            \Mheads\Yii\Table\I18n\TableTranslatorInterface::class                        => \Mheads\Yii2\Table\I18n\Yii2TableTranslator::class,
 
             // mheads/yii2-psr7-bridge
             \Mheads\Yii2Psr7Bridge\HttpMessageBridgeInterface::class                    => \Mheads\Yii2Psr7Bridge\HttpMessageBridge::class,
@@ -68,6 +69,49 @@ return [
             \Mheads\Yii2Psr7Bridge\Response\Psr7ToYii2ResponseConverterInterface::class => \Mheads\Yii2Psr7Bridge\Response\Psr7ToYii2ResponseConverter::class,
         ],
     ],
+];
+```
+
+## Переводы фильтров
+
+`mheads/yii-table` использует
+`Mheads\Yii\Table\I18n\TableTranslatorInterface` для перевода системных
+подписей фильтров. Например, вариантов числового фильтра: "Exactly",
+"More than", "Less than", "Range".
+
+`Mheads\Yii2\Table\I18n\Yii2TableTranslator` вызывает `Yii::t()` с категорией
+`mheads-yii-table`.
+
+Настройте категорию переводов в приложении:
+
+```php
+return [
+    'components' => [
+        'i18n' => [
+            'translations' => [
+                'mheads-yii-table' => [
+                    'class' => \yii\i18n\PhpMessageSource::class,
+                    'basePath' => '@vendor/mheads/yii-table/resources/messages',
+                ],
+            ],
+        ],
+    ],
+];
+```
+
+Стандартные переводы уже лежат в `mheads/yii-table`. Если приложению нужно
+переопределить тексты, укажите собственный `basePath`, например
+`@common/i18n/messages`, и создайте файл
+`common/i18n/messages/ru/mheads-yii-table.php`.
+
+```php
+<?php
+
+return [
+    'number_filter.exactly' => 'Равно',
+    'number_filter.more_than' => 'Больше чем',
+    'number_filter.less_than' => 'Меньше чем',
+    'number_filter.range' => 'Диапазон',
 ];
 ```
 
@@ -183,6 +227,7 @@ use Mheads\Yii\Table\Export\Column\ExportColumnMode;
 use Mheads\Yii\Table\Export\TableBoundExportGeneratorFactory;
 use Mheads\Yii\Table\Export\TableBoundExportOptions;
 use Mheads\Yii\Table\Filter\SearchFilter;
+use Mheads\Yii\Table\I18n\TableTranslatorInterface;
 use Mheads\Yii\Table\Provider\TableProvider;
 use Mheads\Yii\Table\Sort\SortDefinition;
 use Mheads\Yii2\Table\Export\BatchStrategy\QueryDataReaderBatchReadStrategy;
@@ -191,6 +236,7 @@ use Mheads\Yii2DataDb\QueryDataReader;
 final class ProductsTableFactory
 {
     public function __construct(
+        private readonly TableTranslatorInterface $translator,
         private readonly TableBoundExportGeneratorFactory $exportFactory = new TableBoundExportGeneratorFactory(),
     ) {}
 
@@ -201,6 +247,7 @@ final class ProductsTableFactory
         $table = new TableProvider(
             id: 'products-list',
             reader: new QueryDataReader($query),
+            translator: $this->translator,
         );
 
         $table->setPageSize(20);
