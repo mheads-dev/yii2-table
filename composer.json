@@ -25,9 +25,9 @@
 	},
     "require": {
         "php": "8.3 - 8.5",
-        "mheads/yii-table": "^1.0",
         "mheads/yii2-psr7-bridge": "^1.0",
-        "yiisoft/yii2": "^2.0.53"
+        "yiisoft/yii2": "^2.0.53",
+        "mheads/yii-table": "^1.1"
 	},
     "require-dev": {
 		"mheads/yii2-data-db": "^1.0",
